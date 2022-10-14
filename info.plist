@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string>info@judo.technology</string>
+	<key>contactName</key>
+	<string>BlackBelt Technology</string>
+	<key>description</key>
+	<string>JUDO Specific language bundle.</string>
+	<key>name</key>
+	<string>JSL</string>
+	<key>uuid</key>
+	<string>84E8AD17-C93C-44CB-ABC0-4FC08A3E0B0A</string>
+</dict>
+</plist>
