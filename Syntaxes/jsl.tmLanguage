@@ -221,6 +221,10 @@
 							<key>include</key>
 							<string>#primitives</string>
 						</dict>
+						<dict>
+							<key>include</key>
+							<string>#literals</string>
+						</dict>
 					</array>
 				</dict>
 			</array>
@@ -260,7 +264,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.jsl<</string>
+							<string>keyword.control.jsl</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -278,7 +282,7 @@
 					<key>match</key>
 					<string>\b(opposite|opposite-add)\b</string>
 					<key>name</key>
-					<string>keyword.control.jsl<</string>
+					<string>keyword.control.jsl</string>
 				</dict>
 			</array>
 		</dict>
@@ -324,7 +328,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))</string>
+					<string>(?&lt;=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))</string>
 					<key>name</key>
 					<string>constans.numberic.float.jsl</string>
 				</dict>
