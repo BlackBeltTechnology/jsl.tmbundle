@@ -1,3 +1,0 @@
-# JSL TextMate Bundle
-
-Hello
