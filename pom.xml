@@ -3,9 +3,17 @@
 	<modelVersion>4.0.0</modelVersion>
      <groupId>hu.blackbelt.judo</groupId>
     <artifactId>judo-jsl-tmbundle</artifactId>
-    <name>JUDO JSL tmLanguage extension</name>
+    <name>JUDO::JSL::tmLanguage::extension</name>
     <version>${revision}</version>
     <packaging>jar</packaging>
+
+    <url>http://github.com/${project-repositoryId}</url>
+
+    <properties>
+        <revision>1.0.1-SNAPSHOT</revision>
+        <project-repositoryId>BlackBeltTechnology/judo-jsl-tmbundle
+        </project-repositoryId>
+    </properties>
 
     <build>
         <resources>
@@ -29,12 +37,7 @@
             </plugin>
         </plugins>
     </build>
-    <properties>
-        <revision>1.0.1-SNAPSHOT</revision>
-    </properties>
 
-
-    
 
 </project>
 
