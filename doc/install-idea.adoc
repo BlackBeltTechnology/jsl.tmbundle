@@ -14,7 +14,7 @@ image::images/open_installed_texmate_bundles.png["Open installed TextMate bundle
 +
 image::images/add_new_textmate_bundles.png["Add new tmbundle extension"]
 
-4. Select checked out `jsl.tmbundle` directory
+4. Select checked out `judo-jsl-tmbundle` directory
 +
 image::images/browse_jsl_tmbundle.png["Select checked out jsl.tmbundle directory"]
 
