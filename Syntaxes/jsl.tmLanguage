@@ -467,7 +467,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(relation)\b(\s+required)?\s+(\w+)?\s+(\w+)?(\s+(opposite|opposite-add)\s+(\w+))?</string>
+					<string>\b(relation)\b(\s+required)?\s+(\w+(\[\])?)?\s+(\w+)?(\s+(opposite|opposite-add)\s+(\w+))?</string>
 					<key>captures</key>
 					<dict>
 						<key>1</key>
@@ -485,7 +485,7 @@
 							<key>name</key>
 							<string>entity.name.type.typeName.jsl</string>
 						</dict>
-						<key>6</key>
+						<key>7</key>
 						<dict>
 							<key>name</key>
 							<string>keyword.control.jsl</string>
