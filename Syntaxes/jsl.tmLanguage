@@ -53,11 +53,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#modifiersNotInEntity</string>
+					<string>#elementsNotInEntity</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#lambda-expression</string>
+					<string>#lambdaExpression</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -75,7 +75,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\b(self|extends|model|abstract|import)\b</string>
+					<string>\b(self)\b</string>
 					<key>name</key>
 					<string>keyword.control.jsl</string>
 				</dict>
@@ -84,12 +84,6 @@
 					<string>\?|:</string>
 					<key>name</key>
 					<string>keyword.control.ternary.jsl</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>;</string>
-					<key>name</key>
-					<string>keyword.control.jsl</string>
 				</dict>
 			</array>
 		</dict>
@@ -121,18 +115,18 @@
 					<key>name</key>
 					<string>keyword.operator.logical.jsl</string>
 				</dict>
+				<dict>
+					<key>match</key>
+					<string>;</string>
+					<key>name</key>
+					<string>keyword.control.jsl</string>
+				</dict>
 			</array>
 		</dict>
 		<key>types</key>
 		<dict>
 			<key>patterns</key>
 			<array>
-				<dict>
-					<key>match</key>
-					<string>\b(enum)\b</string>
-					<key>name</key>
-					<string>storage.types.class.jsl</string>
-				</dict>
 				<dict>
 					<key>begin</key>
 					<string>\s*(type )\s*</string>
@@ -406,14 +400,14 @@
 					</dict>
 			</array>
 		</dict>		
-		<key>modifiersInEntity</key>
+		<key>elementsInEntity</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>\b(field|identifier|relation|derived|query)\b(\s+required)?\s+(\w+)?</string>
-					<key>captures</key>
+					<key>begin</key>
+					<string>\b(field|identifier)\b(\s+required)?\s+(\w+)?</string>
+					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
@@ -431,16 +425,76 @@
 							<string>entity.name.type.typeName.jsl</string>
 						</dict>
 					</dict>
+					<key>end</key>
+					<string>(?=;)</string>
+					<key>name</key>
+					<string>meta.entityElementDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#defaultValueExpression</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>\b(derived|query)\b\s+(\w+)?</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.typeName.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=;)</string>
+					<key>name</key>
+					<string>meta.entityElementDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#lambdaExpression</string>
+						</dict>
+					</array>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(opposite|opposite-add)\b</string>
-					<key>name</key>
-					<string>keyword.control.jsl</string>
+					<string>\b(relation)\b(\s+required)?\s+(\w+(\[\])?)?\s+(\w+)?(\s+(opposite|opposite-add)\s+(\w+))?</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.typeName.jsl</string>
+						</dict>
+						<key>7</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
 				</dict>
 			</array>
 		</dict>
-		<key>modifiersNotInEntity</key>
+		<key>elementsNotInEntity</key>
 		<dict>
 			<key>patterns</key>
 			<array>
@@ -452,7 +506,7 @@
 				</dict>
 			</array>
 		</dict>
-		<key>lambda-expression</key>
+		<key>lambdaExpression</key>
 		<dict>
 			<key>patterns</key>
 			<array>
@@ -469,6 +523,35 @@
 						</dict>	
 						<key>name</key>
 						<string>meta.meta.lambdaExpressionBody.in.jsl.jsl</string>
+						<key>end</key>
+						<string>(?=;)</string>
+						<key>patterns</key>
+						<array>
+							<dict>
+								<key>include</key>
+								<string>#expressions</string>
+							</dict>
+						</array>
+				</dict>
+			</array>
+		</dict>
+		<key>defaultValueExpression</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>=</string>
+						<key>beginCaptures</key>
+						<dict>
+							<key>0</key>
+							<dict>
+								<key>name</key>
+								<string>keyword.operator.assignment.jsl</string>
+							</dict>
+						</dict>	
+						<key>name</key>
+						<string>meta.meta.defaultValueExpressionBody.in.jsl.jsl</string>
 						<key>end</key>
 						<string>(?=;)</string>
 						<key>patterns</key>
@@ -772,11 +855,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#modifiersInEntity</string>
+					<string>#elementsInEntity</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#lambda-expression</string>
+					<string>#lambdaExpression</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -798,7 +881,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#lambda-expression</string>
+					<string>#lambdaExpression</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -811,6 +894,10 @@
 				<dict>
 					<key>include</key>
 					<string>#operators</string>				
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#keywords</string>				
 				</dict>
 			</array>
 		</dict>
