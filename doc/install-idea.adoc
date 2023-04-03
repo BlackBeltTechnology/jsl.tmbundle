@@ -1,6 +1,6 @@
 # Intallation for Idea
 
-1. Checkout https://github.com/BlackBeltTechnology/jsl.tmbundle to a directory which is kept. (For example ~/TextMateBundles)
+1. Checkout https://github.com/BlackBeltTechnology/judo-jsl-tmbundle to a directory which is kept. (For example ~/TextMateBundles)
 
 1. Check the installation of TextMate Bundles - it its not activated, activate it.
 +
@@ -14,7 +14,7 @@ image::images/open_installed_texmate_bundles.png["Open installed TextMate bundle
 +
 image::images/add_new_textmate_bundles.png["Add new tmbundle extension"]
 
-4. Select checked out `jsl.tmbundle` directory
+4. Select checked out `judo-jsl-tmbundle` directory
 +
 image::images/browse_jsl_tmbundle.png["Select checked out jsl.tmbundle directory"]
 

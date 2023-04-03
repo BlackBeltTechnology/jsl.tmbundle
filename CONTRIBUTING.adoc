@@ -7,11 +7,7 @@ project's https://github.com/BlackBeltTechnology/judo-community/blob/develop/CON
 
 ## Code Structure
 
-This project follows a standard Java project structure, governed by Maven, with potential Maven submodules.
-
-Operational code is placed under the `src` folder.
-
-Build output is generated under the `out` folder.
+This project is only used as a parent for generated projects. Please see `pom.xml` for details!
 
 ## Submission Guidelines
 
@@ -43,6 +39,12 @@ This project follows https://guides.github.com/activities/forking/[GitHub's stan
 project to submit pull requests.
 
 ## Commands
+
+### Run Tests
+
+```sh
+$ mvn clean test
+```
 
 ### Run Full build
 
