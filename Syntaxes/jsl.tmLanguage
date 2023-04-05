@@ -28,6 +28,10 @@
 					<string>#entity-block</string>
 				</dict>
 				<dict>
+				<key>include</key>
+					<string>#transfer-block</string>
+				</dict>
+				<dict>
 					<key>include</key>
 					<string>#enum-block</string>
 				</dict>
@@ -382,7 +386,7 @@
 							<array>
 								<dict>
 									<key>match</key>
-									<string>(\w+|\w+-\w+)\s*=</string>
+									<string>(\w+(-\w+)*)\s*=</string>
 									<key>captures</key>
 									<dict>
 										<key>1</key>
@@ -1189,6 +1193,164 @@
 				<dict>
 					<key>include</key>
 					<string>#terminal-signal</string>				
+				</dict>
+			</array>
+		</dict>
+		<key>transfer-block</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(transfer)\s+(\w+)\s*</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.types.class.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.transferName.jsl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.tranfer.jsl</string>
+					<key>end</key>
+					<string>}</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.section.entity.end.jsl</string>
+						</dict>
+					</dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#mappedElementInTransfer</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>{</string>
+								<key>beginCaptures</key>
+								<dict>
+									<key>0</key>
+									<dict>
+										<key>name</key>
+										<string>punctuation.section.transfer.begin.jsl</string>
+									</dict>
+								</dict>
+								<key>end</key>
+								<string>(?=})</string>
+								<key>name</key>
+								<string>meta.transfer.body.java</string>
+								<key>patterns</key>
+								<array>
+									<dict>
+										<key>include</key>
+										<string>#transfer-body</string>
+									</dict>
+								</array>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>mappedElementInTransfer</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+					<dict>
+						<key>begin</key>
+						<string>\(</string>
+						<key>beginCaptures</key>
+						<dict>
+							<key>0</key>
+							<dict>
+								<key>name</key>
+								<string>punctuation.section.mappedElement.begin.jsl</string>
+							</dict>
+						</dict>
+						<key>end</key>
+						<string>(?=\))</string>
+						<key>name</key>
+						<string>meta.mappedElement.in.jsl</string>
+						<key>patterns</key>
+						<array>
+							<dict>
+								<key>include</key>
+								<string>#modelNameInParameters</string>
+							</dict>
+						</array>
+					</dict>
+			</array>
+		</dict>
+		<key>transfer-body</key>	
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#comments</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#keywords</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#membersInTranfer</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#lambdaExpression</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#literals</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#terminal-signal</string>				
+				</dict>
+			</array>
+		</dict>
+		<key>membersInTransfer</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>\b(field)\b(\s+required)?</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=;)</string>
+					<key>name</key>
+					<string>meta.entityFieldOrIdentifierMemberDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameInFieldAndIdentifier</string>
+						</dict>
+					</array>
 				</dict>
 			</array>
 		</dict>
