@@ -33,6 +33,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#service-block</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#enum-block</string>
 				</dict>
 				<dict>
@@ -42,6 +46,10 @@
 				<dict>
 					<key>include</key>
 					<string>#import</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#annotations</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -300,6 +308,77 @@
 							</array>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>annotations</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(@[^ (]+)(\()</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.annotation.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.annotation.begin.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(\))</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.annotation.end.jsl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.declaration.annotation.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>captures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>constant.other.key.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.operator.assignment.jsl</string>
+								</dict>
+							</dict>
+							<key>match</key>
+							<string>(\w*)\s*(=)</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#expressions</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>,</string>
+							<key>name</key>
+							<string>punctuation.separator.property.jsl</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>@\w*</string>
+					<key>name</key>
+					<string>storage.type.annotation.jsl</string>
 				</dict>
 			</array>
 		</dict>
@@ -771,6 +850,7 @@
 					</dict>
 				</array>
 		</dict>
+		<!-- ENTITY -->
 		<key>entity-block</key>
 		<dict>
 			<key>patterns</key>
@@ -898,6 +978,7 @@
 				</dict>
 			</array>
 		</dict>
+		<!-- TRANSFER -->
 		<key>transfer-block</key>
 		<dict>
 			<key>patterns</key>
@@ -934,36 +1015,44 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#mappedElementInTransfer</string>
+							<string>#mappedElementInTransferAndService</string>
 						</dict>
 						<dict>
 							<key>begin</key>
 							<string>{</string>
-								<key>beginCaptures</key>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
 								<dict>
-									<key>0</key>
-									<dict>
-										<key>name</key>
-										<string>punctuation.section.transfer.begin.jsl</string>
-									</dict>
+									<key>name</key>
+									<string>punctuation.section.transfer.body.begin.jsl</string>
 								</dict>
-								<key>end</key>
-								<string>(?=})</string>
-								<key>name</key>
-								<string>meta.transfer.body.java</string>
-								<key>patterns</key>
-								<array>
-									<dict>
-										<key>include</key>
-										<string>#transfer-body</string>
-									</dict>
-								</array>
+							</dict>
+							<key>end</key>
+							<string>(?=})</string>
+							<key>endCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.transfer.body.end.jsl</string>
+								</dict>
+							</dict>
+							<key>name</key>
+							<string>meta.transfer.body.java</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#transfer-body</string>
+								</dict>
+							</array>
 						</dict>
 					</array>
 				</dict>
 			</array>
 		</dict>
-		<key>mappedElementInTransfer</key>
+		<key>mappedElementInTransferAndService</key>
 		<dict>
 			<key>patterns</key>
 			<array>
@@ -1004,27 +1093,14 @@
 							</dict>
 						</dict>
 						<key>end</key>
-						<string>(?=;)|(?={)</string>
+						<string>(?=;|{)</string>
 						<key>name</key>
 						<string>meta.mappedElement.in.jsl</string>
 						<key>patterns</key>
 						<array>
 							<dict>
-								<key>match</key>
-								<string>(\w+)(::)</string>
-								<key>captures</key>
-								<dict>
-									<key>1</key>
-									<dict>
-										<key>name</key>
-										<string>support.class.namespaceName.jsl</string>
-									</dict>
-									<key>2</key>
-									<dict>
-										<key>name</key>
-										<string>keyword.control.jsl</string>
-									</dict>
-								</dict>
+								<key>include</key>
+								<string>#modelNameSpace</string>
 							</dict>
 							<dict>
 								<key>begin</key>
@@ -1038,10 +1114,11 @@
 									</dict>
 								</dict>
 								<key>end</key>
-								<string>(?={)</string>
+								<string>(?={|;)</string>
 								<key>patterns</key>
 								<array>
 									<dict>
+										<!-- as -->
 										<key>begin</key>
 										<string>as</string>
 										<key>beginCaptures</key>
@@ -1053,7 +1130,7 @@
 											</dict>
 										</dict>
 										<key>end</key>
-										<string>(?={)</string>
+										<string>(?={|;)</string>
 										<key>patterns</key>
 										<array>
 											<dict>
@@ -1068,7 +1145,7 @@
 													</dict>
 												</dict>
 												<key>end</key>
-												<string>(?={)</string>
+												<string>(?={|;)</string>
 											</dict>
 										</array>
 									</dict>
@@ -1076,7 +1153,63 @@
 							</dict>
 						</array>
 					</dict>
-					<!-- exports TODO -->
+					<!-- exports -->
+					<dict>
+						<key>begin</key>
+						<string>exports</string>
+						<key>beginCaptures</key>
+						<dict>
+							<key>0</key>
+							<dict>
+								<key>name</key>
+								<string>keyword.control.jsl</string>
+							</dict>
+						</dict>
+						<key>end</key>
+						<string>(?=;|{)</string>
+						<key>name</key>
+						<string>meta.exportsInTransfer.in.jsl</string>
+						<key>patterns</key>
+						<array>
+							<dict>
+								<key>include</key>
+								<string>#modelNameSpace</string>				
+							</dict>
+							<dict>
+								<key>match</key>
+								<string>(\w+)\s*\,</string>
+								<key>captures</key>
+									<dict>
+										<key>1</key>
+										<dict>
+											<key>name</key>
+											<string>entity.name.type.exportsServices.jsl</string>
+										</dict>
+									</dict>
+							</dict>
+							<dict>
+								<key>begin</key>
+								<string>\w+</string>
+								<key>beginCaptures</key>
+								<dict>
+									<key>0</key>
+									<dict>
+										<key>name</key>
+										<string>entity.name.type.exportsServices.jsl</string>
+									</dict>
+								</dict>
+								<key>end</key>
+								<string>(?={)</string>
+								<key>patterns</key>
+								<array>
+									<dict>
+										<key>include</key>
+										<string>#comments</string>				
+									</dict>
+								</array>
+							</dict>
+						</array>
+					</dict>
 			</array>
 		</dict>
 		<key>transfer-body</key>	
@@ -1093,11 +1226,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#membersInTranfer</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#lambdaExpression</string>
+					<string>#membersInTransfer</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1107,12 +1236,17 @@
 					<key>include</key>
 					<string>#terminal-signal</string>				
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#annotations</string>				
+				</dict>
 			</array>
 		</dict>
 		<key>membersInTransfer</key>
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- field  -->
 				<dict>
 					<key>begin</key>
 					<string>\b(field)\b(\s+required)?</string>
@@ -1132,12 +1266,384 @@
 					<key>end</key>
 					<string>(?=;)</string>
 					<key>name</key>
-					<string>meta.entityFieldOrIdentifierMemberDeclarationScope.jsl</string>
+					<string>meta.transferFieldMemberDeclarationScope.jsl</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#modelNameInFieldAndIdentifier</string>
+							<string>#modelNameSpace</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>(\w+)(\[\])?</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.transferName.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=;)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>begin</key>
+									<string>maps</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>0</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>end</key>
+									<string>(?=;|{)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#expressions</string>
+										</dict>
+									</array>
+								</dict>
+								<dict>
+									<key>begin</key>
+									<string>reads</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>0</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>end</key>
+									<string>(?=;|{)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#expressions</string>
+										</dict>
+										<dict>
+											<key>begin</key>
+											<string>choises</string>
+											<key>beginCaptures</key>
+											<dict>
+												<key>0</key>
+												<dict>
+													<key>name</key>
+													<string>keyword.control.jsl</string>
+												</dict>
+											</dict>
+											<key>end</key>
+											<string>(?=;|{)</string>
+											<key>patterns</key>
+											<array>
+												<dict>
+													<key>include</key>
+													<string>#expressions</string>
+												</dict>
+											</array>
+										</dict>
+									</array>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<!-- constructor -->
+				<dict>
+					<key>begin</key>
+					<string>(constructor)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=})</string>
+					<key>name</key>
+					<string>meta.transferConstructorDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>begin</key>
+							<string>((self).)?(\w+)\s*(=)</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+								<!-- 
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>support.variable.alliasName.jsl</string>
+								</dict> 
+								-->
+								<key>4</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.operator.assignment.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>;</string>
+							<key>endCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+							<key>name</key>
+							<string>meta.transferConstructorFieldDeclaration.jsl</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#expressions</string>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<!-- SERVICE -->
+		<key>service-block</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(service)\s+(\w+)\s*</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.types.class.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.serviceName.jsl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.tranfer.jsl</string>
+					<key>end</key>
+					<string>}</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.section.service.end.jsl</string>
+						</dict>
+					</dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#mappedElementInTransferAndService</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>{</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.service.body.begin.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=})</string>
+							<key>endCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.service.body.end.jsl</string>
+								</dict>
+							</dict>
+							<key>name</key>
+							<string>meta.service.body.java</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#service-body</string>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>service-body</key>	
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#comments</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#keywords</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#membersInService</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#literals</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#terminal-signal</string>				
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#annotations</string>				
+				</dict>
+			</array>
+		</dict>
+		<key>membersInService</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<!-- function  -->
+				<dict>
+					<key>begin</key>
+					<string>\b(function)\b(\s+required)?</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=;)</string>
+					<key>name</key>
+					<string>meta.transferFieldMemberDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameSpace</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>(\w+)(\[\])?</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.transferName.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=;)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>begin</key>
+									<string>maps</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>0</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>end</key>
+									<string>(?=;|{)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#expressions</string>
+										</dict>
+									</array>
+								</dict>
+								<dict>
+									<key>begin</key>
+									<string>reads</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>0</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>end</key>
+									<string>(?=;|{)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#expressions</string>
+										</dict>
+										<dict>
+											<key>begin</key>
+											<string>choises</string>
+											<key>beginCaptures</key>
+											<dict>
+												<key>0</key>
+												<dict>
+													<key>name</key>
+													<string>keyword.control.jsl</string>
+												</dict>
+											</dict>
+											<key>end</key>
+											<string>(?=;|{)</string>
+											<key>patterns</key>
+											<array>
+												<dict>
+													<key>include</key>
+													<string>#expressions</string>
+												</dict>
+											</array>
+										</dict>
+									</array>
+								</dict>
+							</array>
 						</dict>
 					</array>
 				</dict>
@@ -1183,7 +1689,7 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#modelName</string>				
+					<string>#modelNameSpace</string>				
 				</dict>
 				<dict>
 					<key>match</key>
@@ -1210,6 +1716,13 @@
 					</dict>
 					<key>end</key>
 					<string>(?={)</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#comments</string>				
+						</dict>
+					</array>
 				</dict>
 			</array>
 		</dict>
@@ -1350,21 +1863,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>(\w+)(::)</string>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.namespaceName.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
+					<key>include</key>
+					<string>#modelNameSpace</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -1387,21 +1887,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>(\w+)(::)</string>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.namespaceName.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
+					<key>include</key>
+					<string>#modelNameSpace</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -1436,21 +1923,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>(\w+)(::)</string>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.namespaceName.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
+					<key>include</key>
+					<string>#modelNameSpace</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -1485,21 +1959,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>(\w+)(::)</string>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.namespaceName.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
+					<key>include</key>
+					<string>#modelNameSpace</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -1538,21 +1999,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>(\w+)(::)</string>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.namespaceName.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
+					<key>include</key>
+					<string>#modelNameSpace</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -1597,21 +2045,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>(\w+)(::)</string>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.namespaceName.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
+					<key>include</key>
+					<string>#modelNameSpace</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -1645,6 +2080,29 @@
 							<string>#literals</string>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>modelNameSpace</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>(\w+)(::)</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>support.class.namespaceName.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
 				</dict>
 			</array>
 		</dict>
