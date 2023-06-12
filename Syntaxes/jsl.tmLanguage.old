@@ -145,7 +145,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>\s*(type)\b\s*</string>
+					<string>\s*(type )\s*</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -173,25 +173,8 @@
 							<string>#primitives</string>
 						</dict>
 						<dict>
-							<key>patterns</key>
-							<array>
-								<dict>
-									<key>match</key>
-									<string>(\w+(-\w+)*)\s*:</string>
-									<key>captures</key>
-									<dict>
-										<key>1</key>
-										<dict>
-											<key>name</key>
-											<string>variable.parameter.typeDeclaration.jsl</string>
-										</dict>
-									</dict>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#literals</string>
-								</dict>
-							</array>
+							<key>include</key>
+							<string>#parameters</string>
 						</dict>						
 					</array>
 				</dict>
@@ -424,6 +407,47 @@
 						</dict>
 					</dict>
 				</dict>
+			</array>
+		</dict>
+		<key>parameters</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+					<dict>
+						<key>begin</key>
+						<string>\(</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.parameter.begin.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=\))</string>
+							<key>name</key>
+							<string>meta.paramters.in.jsl</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>match</key>
+									<string>(\w+(-\w+)*)\s*=</string>
+									<key>captures</key>
+									<dict>
+										<key>1</key>
+										<dict>
+											<key>name</key>
+											<string>variable.parameter.typeDeclaration.jsl</string>
+										</dict>
+									</dict>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#literals</string>
+								</dict>
+							</array>
+					</dict>
 			</array>
 		</dict>
 		<key>membersInEntity</key>
@@ -859,18 +883,13 @@
 					<key>name</key>
 					<string>meta.entity.jsl</string>
 					<key>end</key>
-					<string>(})|(;)</string>
+					<string>}</string>
 					<key>endCaptures</key>
 					<dict>
-						<key>1</key>
+						<key>0</key>
 						<dict>
 							<key>name</key>
 							<string>punctuation.section.entity.end.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -887,7 +906,7 @@
 								</dict>
 							</dict>
 							<key>end</key>
-							<string>(?={|;)</string>
+							<string>(?={)</string>
 							<key>name</key>
 							<string>meta.definition.entity.inherited.classes.end.jsl</string>
 							<key>patterns</key>
@@ -2161,7 +2180,7 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?={|;)</string>
+					<string>(?={)</string>
 					<key>patterns</key>
 					<array>
 						<dict>
