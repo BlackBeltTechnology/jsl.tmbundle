@@ -145,7 +145,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>\s*(type)\b\s*</string>
+					<string>\s*(type )\s*</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -173,25 +173,8 @@
 							<string>#primitives</string>
 						</dict>
 						<dict>
-							<key>patterns</key>
-							<array>
-								<dict>
-									<key>match</key>
-									<string>(\w+(-\w+)*)\s*:</string>
-									<key>captures</key>
-									<dict>
-										<key>1</key>
-										<dict>
-											<key>name</key>
-											<string>variable.parameter.typeDeclaration.jsl</string>
-										</dict>
-									</dict>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#literals</string>
-								</dict>
-							</array>
+							<key>include</key>
+							<string>#parameters</string>
 						</dict>						
 					</array>
 				</dict>
@@ -426,13 +409,54 @@
 				</dict>
 			</array>
 		</dict>
+		<key>parameters</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+					<dict>
+						<key>begin</key>
+						<string>\(</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.parameter.begin.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=\))</string>
+							<key>name</key>
+							<string>meta.paramters.in.jsl</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>match</key>
+									<string>(\w+(-\w+)*)\s*=</string>
+									<key>captures</key>
+									<dict>
+										<key>1</key>
+										<dict>
+											<key>name</key>
+											<string>variable.parameter.typeDeclaration.jsl</string>
+										</dict>
+									</dict>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#literals</string>
+								</dict>
+							</array>
+					</dict>
+			</array>
+		</dict>
 		<key>membersInEntity</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>\b(identifier)\b(\s+required)?</string>
+					<string>\b(field|identifier)\b(\s+required)?</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -454,21 +478,16 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#modelNameInIdentifier</string>
+							<string>#modelNameInFieldAndIdentifier</string>
 						</dict>
 					</array>
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>\b(field)\b(\s+required)?</string>
+					<string>\b(query)\b</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-						<key>2</key>
 						<dict>
 							<key>name</key>
 							<string>keyword.control.jsl</string>
@@ -477,12 +496,35 @@
 					<key>end</key>
 					<string>(?=;)</string>
 					<key>name</key>
-					<string>meta.entityFieldMemberDeclarationScope.jsl</string>
+					<string>meta.entityQueryMemberDeclarationScope.jsl</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#modelNameInField</string>
+							<string>#modelNameInQuery</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>\b(derived)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=;)</string>
+					<key>name</key>
+					<string>meta.entityDerivedMemberDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameInDerived</string>
 						</dict>
 					</array>
 				</dict>
@@ -539,37 +581,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#modelNameSpace</string>
-						</dict>
-						<dict>
-							<key>begin</key>
-							<string>(\w+)(\[\])?</string>
-							<key>beginCaptures</key>
-							<dict>
-								<key>1</key>
-								<dict>
-									<key>name</key>
-									<string>support.class.typeName.jsl</string>
-								</dict>
-								<key>2</key>
-								<dict>
-									<key>name</key>
-									<string>keyword.control.jsl</string>
-								</dict>
-							</dict>
-							<key>end</key>
-							<string>(?=;)</string>
-							<key>patterns</key>
-							<array>
-								<dict>
-									<key>include</key>
-									<string>#parametersInQuery</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#lambdaExpression</string>
-								</dict>
-							</array>
+							<string>#modelNameInQuery</string>
 						</dict>
 					</array>
 				</dict>
@@ -610,7 +622,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>&lt;=</string>
+					<string>=></string>
 						<key>beginCaptures</key>
 						<dict>
 							<key>0</key>
@@ -871,18 +883,13 @@
 					<key>name</key>
 					<string>meta.entity.jsl</string>
 					<key>end</key>
-					<string>(})|(;)</string>
+					<string>}</string>
 					<key>endCaptures</key>
 					<dict>
-						<key>1</key>
+						<key>0</key>
 						<dict>
 							<key>name</key>
 							<string>punctuation.section.entity.end.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -899,7 +906,7 @@
 								</dict>
 							</dict>
 							<key>end</key>
-							<string>(?={|;)</string>
+							<string>(?={)</string>
 							<key>name</key>
 							<string>meta.definition.entity.inherited.classes.end.jsl</string>
 							<key>patterns</key>
@@ -956,10 +963,6 @@
 				<dict>
 					<key>include</key>
 					<string>#types</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#annotations</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -2177,7 +2180,7 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?={|;)</string>
+					<string>(?={)</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -2344,7 +2347,7 @@
 				</dict>
 			</array>
 		</dict>
-		<key>modelNameInIdentifier</key>
+		<key>modelNameInFieldAndIdentifier</key>
 		<dict>
 			<key>patterns</key>
 			<array>
@@ -2380,7 +2383,7 @@
 				</dict>
 			</array>
 		</dict>
-		<key>modelNameInField</key>
+		<key>modelNameInDerived</key>
 		<dict>
 			<key>patterns</key>
 			<array>
@@ -2410,15 +2413,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#parametersInQuery</string>
-						</dict>
-						<dict>
-							<key>include</key>
 							<string>#lambdaExpression</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#defaultValueExpression</string>
 						</dict>
 					</array>
 				</dict>
@@ -2493,65 +2488,20 @@
 					<key>patterns</key>
 					<array>
 						<dict>
-							<key>include</key>
-							<string>#parametersInQuery</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#lambdaExpression</string>
-						</dict>
-						<dict>
 							<key>begin</key>
-							<string>=</string>
-								<key>beginCaptures</key>
+							<string>(opposite-add|opposite)</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>1</key>
 								<dict>
-									<key>0</key>
-									<dict>
-										<key>name</key>
-										<string>keyword.operator.assignment.jsl</string>
-									</dict>
-								</dict>	
-								<key>name</key>
-								<string>meta.meta.defaultValueExpressionBody.in.jsl.jsl</string>
-								<key>end</key>
-								<string>(?=;)</string>
-								<key>patterns</key>
-								<array>
-									<dict>
-										<key>include</key>
-										<string>#expressions</string>
-									</dict>
-									<dict>
-										<key>include</key>
-										<string>#oppositeAndOppositeAdd</string>
-									</dict>
-								</array>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#oppositeAndOppositeAdd</string>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=;)</string>
 						</dict>
 					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>oppositeAndOppositeAdd</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(opposite-add|opposite)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>(?=;)</string>
 				</dict>
 			</array>
 		</dict>
