@@ -37,6 +37,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#row-block</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#actor-block</string>
 				</dict>
 				<dict>
@@ -1300,6 +1304,7 @@
 					<key>include</key>
 					<string>#constructor-destrtuctor</string>				
 				</dict>
+				<!--  submmit, action -->
 				<dict>
 					<key>begin</key>
 					<string>\b(submit|action)\b</string>
@@ -1531,10 +1536,12 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- destructor, constructor -->
 				<dict>
 					<key>include</key>
 					<string>#constructor-destrtuctor</string>				
 				</dict>
+				<!--  text -->
 				<dict>
 					<key>begin</key>
 					<string>\b(text)\b(\s+\w+)?</string>
@@ -1561,14 +1568,10 @@
 					<key>patterns</key>
 					<array>
 						<dict>
-							<key>include</key>
-							<string>#modelNameSpace</string>
-						</dict>
-						<dict>
 							<key>patterns</key>
 							<array>
 								<dict>
-									<!-- <=>  and <= -->
+									<!-- <= -->
 									<key>begin</key>
 									<string>(&lt;=)</string>
 									<key>beginCaptures</key>
@@ -1599,6 +1602,352 @@
 									<key>include</key>
 									<string>#parameter-pair</string>
 								</dict>	
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<!-- field, link -->
+				<dict>
+					<key>begin</key>
+					<string>\b(field|link)\b(\s+required\b)?</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>;</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.viewTextMemberDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameSpace</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>\w+</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.namespaceName.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?={|;)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<!-- <=  and <=> -->
+									<key>begin</key>
+									<string>(&lt;=&gt;|&lt;=)</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>1</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>name</key>
+									<string>meta.viewMapsOrReadFieldAndLinkScope.jsl</string>
+									<key>end</key>
+									<string>(?=;)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#expressions</string>
+										</dict>
+										<dict>
+											<key>include</key>
+											<string>#parameter-pair</string>
+										</dict>
+									</array>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#parameter-pair</string>
+								</dict>	
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<!-- table -->
+				<dict>
+					<key>begin</key>
+					<string>\b(table)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>;</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.viewTextMemberDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameSpace</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>(\w+)(\[\])?</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.typeName.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?={|;)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<!-- <=  and <=> -->
+									<key>begin</key>
+									<string>(&lt;==&gt;|&lt;=)</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>1</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>name</key>
+									<string>meta.viewMapsOrReadFieldAndLinkScope.jsl</string>
+									<key>end</key>
+									<string>(?=;)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#expressions</string>
+										</dict>
+										<dict>
+											<key>include</key>
+											<string>#parameter-pair</string>
+										</dict>
+									</array>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#parameter-pair</string>
+								</dict>	
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<!--  submmit, action -->
+				<dict>
+					<key>begin</key>
+					<string>\b(submit|action)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>;</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.transferSubmitAndActionMemberDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameSpace</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>(\w+)(\[\])?</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.typeName.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=;)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#parametersInQuery</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#parameter-pair</string>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#group</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#tabs</string>
+				</dict>
+			</array>
+		</dict>
+		<key>group</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>\b(group)\b(\s+\w+)?</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>}</string>
+					<key>name</key>
+					<string>meta.viewGroupDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#parameter-pair</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>{</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.enum.begin.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=})</string>
+							<key>name</key>
+							<string>meta.group.body.java</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#view-body</string>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>tabs</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>\b(tabs)\b(\s+\w+)?</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>}</string>
+					<key>name</key>
+					<string>meta.ConstructorDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#parameter-pair</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>{</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.enum.begin.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=})</string>
+							<key>name</key>
+							<string>meta.group.body.java</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#group</string>
+								</dict>
 							</array>
 						</dict>
 					</array>
@@ -1684,14 +2033,14 @@
 				</dict>
 			</array>
 		</dict>
-		<!-- ACTOR -->
-		<key>actor-block</key>
+		<!-- ROW -->
+		<key>row-block</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(actor)\s+(\w+)\s*</string>
+					<string>\b(row)\b\s+(\w+)?\s*</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -1702,13 +2051,313 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
+							<string>entity.name.type.rowName.jsl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.tranfer.jsl</string>
+					<key>end</key>
+					<string>(})|(;)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.section.entity.end.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modifiersRulesForRow</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>{</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.transfer.body.begin.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=})</string>
+							<key>endCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.section.transfer.body.end.jsl</string>
+								</dict>
+							</dict>
+							<key>name</key>
+							<string>meta.transfer.body.java</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#comments</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#keywords</string>
+								</dict>
+								<!-- column -->
+								<dict>
+									<key>begin</key>
+									<string>\b(column)\b</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>1</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+										<key>2</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>end</key>
+									<string>;</string>
+									<key>endCaptures</key>
+									<dict>
+										<key>0</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>name</key>
+									<string>meta.viewTextMemberDeclarationScope.jsl</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#modelNameSpace</string>
+										</dict>
+										<dict>
+											<key>begin</key>
+											<string>\w+</string>
+											<key>beginCaptures</key>
+											<dict>
+												<key>0</key>
+												<dict>
+													<key>name</key>
+													<string>support.class.namespaceName.jsl</string>
+												</dict>
+											</dict>
+											<key>end</key>
+											<string>(?={|;)</string>
+											<key>patterns</key>
+											<array>
+												<dict>
+													<!-- <=  and <=> -->
+													<key>begin</key>
+													<string>(&lt;=&gt;|&lt;=)</string>
+													<key>beginCaptures</key>
+													<dict>
+														<key>1</key>
+														<dict>
+															<key>name</key>
+															<string>keyword.control.jsl</string>
+														</dict>
+													</dict>
+													<key>name</key>
+													<string>meta.viewMapsOrReadFieldAndLinkScope.jsl</string>
+													<key>end</key>
+													<string>(?=;)</string>
+													<key>patterns</key>
+													<array>
+														<dict>
+															<key>include</key>
+															<string>#expressions</string>
+														</dict>
+														<dict>
+															<key>include</key>
+															<string>#parameter-pair</string>
+														</dict>
+													</array>
+												</dict>
+												<dict>
+													<key>include</key>
+													<string>#parameter-pair</string>
+												</dict>	
+											</array>
+										</dict>
+									</array>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#literals</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#terminal-signal</string>				
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#annotations</string>				
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>modifiersRulesForRow</key>	
+		<dict>
+			<key>patterns</key>
+			<array>
+				<!-- regular mapping field -->
+				<dict>
+					<key>begin</key>
+					<string>\(</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.section.mappedElement.begin.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=\))</string>
+					<key>name</key>
+					<string>meta.mappedElement.in.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameInParameters</string>
+						</dict>
+					</array>
+				</dict>
+				<!-- alternativ mapping field -->
+				<dict>
+					<key>begin</key>
+					<string>maps</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=;|{)</string>
+					<key>name</key>
+					<string>meta.mappedElement.in.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameSpace</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>\w+</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>0</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.namespaceName.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?={|;)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<!-- as -->
+									<key>begin</key>
+									<string>as</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>0</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>end</key>
+									<string>(?={|;)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>begin</key>
+											<string>\w+</string>
+											<key>beginCaptures</key>
+											<dict>
+												<key>0</key>
+												<dict>
+													<key>name</key>
+													<string>support.variable.alliasName.jsl</string>
+												</dict>
+											</dict>
+											<key>end</key>
+											<string>(?={|;)</string>
+											<key>pattern</key>
+											<array>
+												<dict>
+													<key>include</key>
+													<string>#parameter-pair</string>
+												</dict>	
+											</array>
+										</dict>
+									</array>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#parameter-pair</string>
+				</dict>	
+			</array>
+		</dict>
+		<!-- ACTOR -->
+		<key>actor-block</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(actor)(\s+human|system)?(\s+\w+)?\s*</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.types.class.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
 							<string>entity.name.type.actorName.jsl</string>
 						</dict>
 					</dict>
 					<key>name</key>
 					<string>meta.tranfer.jsl</string>
 					<key>end</key>
-					<string>;</string>
+					<string>(})|(;)</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>0</key>
@@ -1825,6 +2474,10 @@
 											<array>
 												<dict>
 													<key>include</key>
+													<string>#parameter-pair-actor</string>
+												</dict>
+												<dict>
+													<key>include</key>
 													<string>#actorBody</string>
 												</dict>
 											</array>
@@ -1837,6 +2490,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#parameter-pair-actor</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#actorBody</string>
 				</dict>
 			</array>
@@ -1845,32 +2502,252 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+			<dict>
+				<key>begin</key>
+				<string>{</string>
+				<key>beginCaptures</key>
 				<dict>
-					<key>match</key>
-					<string>(realm|claim)\s+(\".*\")</string>
-					<key>captures</key>
+					<key>0</key>
+					<dict>
+						<key>name</key>
+						<string>punctuation.section.actor.body.begin.jsl</string>
+					</dict>
+				</dict>
+				<key>end</key>
+				<string>(?=})</string>
+				<key>endCaptures</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>name</key>
+						<string>punctuation.section.actor.body.end.jsl</string>
+					</dict>
+				</dict>
+				<key>name</key>
+				<string>meta.actor.body.java</string>
+				<key>patterns</key>
+				<array>
+					<!-- group -->
+					<dict>
+						<key>begin</key>
+						<string>\b(group)\b(\s+\w+)?</string>
+						<key>beginCaptures</key>
+						<dict>
+							<key>1</key>
+							<dict>
+								<key>name</key>
+								<string>keyword.control.jsl</string>
+							</dict>
+						</dict>
+						<key>end</key>
+						<string>}</string>
+						<key>name</key>
+						<string>meta.actorGroupMemberDeclarationScope.jsl</string>
+						<key>patterns</key>
+						<array>
+							<dict>
+								<key>include</key>
+								<string>#parameter-pair</string>
+							</dict>
+							<dict>
+								<key>begin</key>
+								<string>{</string>
+								<key>beginCaptures</key>
+								<dict>
+									<key>0</key>
+									<dict>
+										<key>name</key>
+										<string>punctuation.section.enum.begin.jsl</string>
+									</dict>
+								</dict>
+								<key>end</key>
+								<string>(?=})</string>
+								<key>name</key>
+								<string>meta.group.body.java</string>
+								<key>patterns</key>
+								<array>
+									<dict>
+										<key>include</key>
+										<string>#actor-menu</string>
+									</dict>
+								</array>
+							</dict>
+						</array>
+					</dict>
+					<!--  acces -->
+					<dict>
+						<key>begin</key>
+						<string>\b(acces)\b</string>
+						<key>beginCaptures</key>
+						<dict>
+							<key>1</key>
+							<dict>
+								<key>name</key>
+								<string>keyword.control.jsl</string>
+							</dict>
+						</dict>
+						<key>end</key>
+						<string>;</string>
+						<key>endCaptures</key>
+						<dict>
+							<key>0</key>
+							<dict>
+								<key>name</key>
+								<string>keyword.control.jsl</string>
+							</dict>
+						</dict>
+						<key>name</key>
+						<string>meta.actorAccesMemberDeclarationScope.jsl</string>
+						<key>patterns</key>
+						<array>
+							<dict>
+								<key>include</key>
+								<string>#modelNameSpace</string>
+							</dict>
+							<dict>
+								<key>begin</key>
+								<string>(\w+)(\[\])?</string>
+								<key>beginCaptures</key>
+								<dict>
+									<key>1</key>
+									<dict>
+										<key>name</key>
+										<string>support.class.typeName.jsl</string>
+									</dict>
+									<key>2</key>
+									<dict>
+										<key>name</key>
+										<string>keyword.control.jsl</string>
+									</dict>
+								</dict>
+								<key>end</key>
+								<string>(?=;)</string>
+								<key>patterns</key>
+								<array>
+									<dict>
+										<!-- <= -->
+										<key>begin</key>
+										<string>(&lt;=)</string>
+										<key>beginCaptures</key>
+										<dict>
+											<key>1</key>
+											<dict>
+												<key>name</key>
+												<string>keyword.control.jsl</string>
+											</dict>
+										</dict>
+										<key>name</key>
+										<string>meta.actorGetterExpressionMemberDeclarationScope.jsl</string>
+										<key>end</key>
+										<string>(?=;)</string>
+										<key>patterns</key>
+										<array>
+											<dict>
+												<key>include</key>
+												<string>#expressions</string>
+											</dict>
+										</array>
+									</dict>
+								</array>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>include</key>
+						<string>#actor-menu</string>
+					</dict>
+				</array>
+				</dict>
+			</array>
+		</dict>
+		<key>actor-menu</key>	
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>\b(menu)\b</string>
+					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
 							<string>keyword.control.jsl</string>
 						</dict>
-						<key>2</key>
+					</dict>
+					<key>end</key>
+					<string>;</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>string.quoted.double.states</string>
+							<string>keyword.control.jsl</string>
 						</dict>
 					</dict>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>identity</string>
 					<key>name</key>
-					<string>keyword.control.jsl</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#guard</string>				
+					<string>meta.actorMenuMemberDeclarationScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#modelNameSpace</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>(\w+)(\[\])?</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.typeName.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(?=;)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<!-- <= -->
+									<key>begin</key>
+									<string>(&lt;=)</string>
+									<key>beginCaptures</key>
+									<dict>
+										<key>1</key>
+										<dict>
+											<key>name</key>
+											<string>keyword.control.jsl</string>
+										</dict>
+									</dict>
+									<key>name</key>
+									<string>meta.actorGetterExpressionMemberDeclarationScope.jsl</string>
+									<key>end</key>
+									<string>(?=;)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#expressions</string>
+										</dict>
+										<dict>
+											<key>include</key>
+											<string>#parameter-pair</string>
+										</dict>
+									</array>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#parameter-pair</string>
+								</dict>	
+							</array>
+						</dict>
+					</array>
 				</dict>
 			</array>
 		</dict>
@@ -1972,6 +2849,55 @@
 				<dict>
 					<key>include</key>
 					<string>#comments-inline</string>
+				</dict>
+			</array>
+		</dict>
+		<key>parameter-pair-actor</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>(realm|claim)\s*(:)\s*(\".*\")</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.function.arrow.jsl</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>string.quoted.double.states</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(identity|guard)\s*(:)</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.function.arrow.jsl</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#expression</string>
 				</dict>
 			</array>
 		</dict>
@@ -2384,7 +3310,7 @@
 							<key>name</key>
 							<string>support.class.typeName.jsl</string>
 						</dict>
-					</dict>
+					</dict>	
 					<key>end</key>
 					<string>(?=&gt;|\|)</string>
 					<key>name</key>
