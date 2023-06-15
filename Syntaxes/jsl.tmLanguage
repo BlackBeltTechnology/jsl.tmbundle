@@ -209,6 +209,10 @@
 					<key>include</key>
 					<string>#literals</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#TypeWithModelName</string>
+				</dict>
 			</array>
 		</dict>
 		<key>model</key>
@@ -1246,7 +1250,7 @@
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>(\w+)(\[\])?</string>
+							<string>(\w+)(\[\])?(\s+\w+)?</string>
 							<key>beginCaptures</key>
 							<dict>
 								<key>1</key>
@@ -1258,6 +1262,11 @@
 								<dict>
 									<key>name</key>
 									<string>keyword.control.jsl</string>
+								</dict>
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>variable.other.jsl</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -1336,7 +1345,7 @@
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>(\w+)(\[\])?</string>
+							<string>(\w+)(\[\])?(\s+\w+)?</string>
 							<key>beginCaptures</key>
 							<dict>
 								<key>1</key>
@@ -1348,6 +1357,11 @@
 								<dict>
 									<key>name</key>
 									<string>keyword.control.jsl</string>
+								</dict>
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>variable.other.jsl</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -1643,13 +1657,18 @@
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>\w+</string>
+							<string>(\w+)(\s+\w+)?</string>
 							<key>beginCaptures</key>
 							<dict>
-								<key>0</key>
+								<key>1</key>
 								<dict>
 									<key>name</key>
 									<string>support.class.namespaceName.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>variable.other.jsl</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -1724,7 +1743,7 @@
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>(\w+)(\[\])?</string>
+							<string>(\w+)(\[\])?(\s+\w+)?</string>
 							<key>beginCaptures</key>
 							<dict>
 								<key>1</key>
@@ -1736,6 +1755,11 @@
 								<dict>
 									<key>name</key>
 									<string>keyword.control.jsl</string>
+								</dict>
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>variable.other.jsl</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -1810,7 +1834,7 @@
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>(\w+)(\[\])?</string>
+							<string>(\w+)(\[\])?(\s+\w+)?</string>
 							<key>beginCaptures</key>
 							<dict>
 								<key>1</key>
@@ -1822,6 +1846,11 @@
 								<dict>
 									<key>name</key>
 									<string>keyword.control.jsl</string>
+								</dict>
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>variable.other.jsl</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -2147,13 +2176,18 @@
 										</dict>
 										<dict>
 											<key>begin</key>
-											<string>\w+</string>
+											<string>(\w+)(\s+\w+)?</string>
 											<key>beginCaptures</key>
 											<dict>
-												<key>0</key>
+												<key>1</key>
 												<dict>
 													<key>name</key>
 													<string>support.class.namespaceName.jsl</string>
+												</dict>
+												<key>2</key>
+												<dict>
+													<key>name</key>
+													<string>variable.other.jsl</string>
 												</dict>
 											</dict>
 											<key>end</key>
@@ -2606,7 +2640,7 @@
 							</dict>
 							<dict>
 								<key>begin</key>
-								<string>(\w+)(\[\])?</string>
+								<string>(\w+)(\[\])?(\s+\w+)?</string>
 								<key>beginCaptures</key>
 								<dict>
 									<key>1</key>
@@ -2619,6 +2653,11 @@
 										<key>name</key>
 										<string>keyword.control.jsl</string>
 									</dict>
+									<key>3</key>
+									<dict>
+									<key>name</key>
+									<string>variable.other.jsl</string>
+								</dict>
 								</dict>
 								<key>end</key>
 								<string>(?=;)</string>
@@ -2695,7 +2734,7 @@
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>(\w+)(\[\])?</string>
+							<string>(\w+)(\[\])?(\s+\w+)?</string>
 							<key>beginCaptures</key>
 							<dict>
 								<key>1</key>
@@ -2707,6 +2746,11 @@
 								<dict>
 									<key>name</key>
 									<string>keyword.control.jsl</string>
+								</dict>
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>variable.other.jsl</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -3043,7 +3087,7 @@
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>(\w+)(\[\])?</string>
+					<string>(\w+)(\[\])?(\s+\w+)?</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -3055,6 +3099,11 @@
 						<dict>
 							<key>name</key>
 							<string>keyword.control.jsl</string>
+						</dict>		
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.jsl</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -3079,7 +3128,7 @@
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>(\w+)(\[\])?</string>
+					<string>(\w+)(\[\])?(\s+\w+)?</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -3091,6 +3140,11 @@
 						<dict>
 							<key>name</key>
 							<string>keyword.control.jsl</string>
+						</dict>		
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.jsl</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -3113,46 +3167,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>modelNameInQuery</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#modelNameSpace</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(\w+)(\[\])?</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.typeName.jsl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.jsl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>(?=;)</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#parametersInQuery</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#lambdaExpression</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
 		<key>modelNameInRelation</key>
 		<dict>
 			<key>patterns</key>
@@ -3163,7 +3177,7 @@
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>(\w+)(\[\])?</string>
+					<string>(\w+)(\[\])?(\s+\w+)?</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -3175,6 +3189,11 @@
 						<dict>
 							<key>name</key>
 							<string>keyword.control.jsl</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.jsl</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -3292,33 +3311,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>modelNameInFunction</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#modelNameSpace</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(\w+)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.typeName.jsl</string>
-						</dict>
-					</dict>	
-					<key>end</key>
-					<string>(?=&gt;|\|)</string>
-					<key>name</key>
-					<string>meta.servicefunctionmemberdeclarationUnion.jsl</string>
-				</dict>
-
-			</array>
-		</dict>
 		<key>modelNameSpace</key>
 		<dict>
 			<key>patterns</key>
@@ -3337,6 +3329,73 @@
 						<dict>
 							<key>name</key>
 							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>
+				</dict>
+			</array>
+		</dict>
+		<key>TypeWithModelName</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(\w+)(::)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>support.class.typeName.jsl</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.jsl</string>
+						</dict>
+					</dict>	
+					<key>end</key>
+					<string>(\w+)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>support.class.typeName.jsl</string>
+						</dict>
+					</dict>	
+					<key>name</key>
+					<string>meta.TypeWithModelNameScope.jsl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>match</key>
+							<string>(\w+)(::)</string>
+							<key>captures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>support.class.namespaceName.jsl</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.control.jsl</string>
+								</dict>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>([A-Z]\w+)[^:]</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>support.class.namespaceName.jsl</string>
 						</dict>
 					</dict>
 				</dict>
